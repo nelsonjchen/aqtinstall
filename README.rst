@@ -32,12 +32,6 @@ automatically download prebuilt Qt binaries for any target (you're not bound to
 Linux binaries on Linux; you could also download iOS binaries).
 It's working with python on Linux, OS X and Windows.
 
-Prerequisite
-------------
-
-**Dependencies**: python, 7z
-
-It is required `p7zip` for windows, `7zip` for mac or `p7zip-full` for Ubuntu.
 
 Install
 -------

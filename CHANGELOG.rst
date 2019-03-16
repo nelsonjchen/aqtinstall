@@ -17,6 +17,8 @@ Added
 Changed
 -------
 
+* Use `py7zr` instead of external `7zip` command for extracting package archives.
+
 Fixed
 -----
 

@@ -23,21 +23,20 @@
 import functools
 import logging
 import os
-import platform
 import requests
-import sys
 import traceback
 import aqt.metalink
 from six import StringIO
+import py7zr
 from multiprocessing.dummy import Pool
 from operator import and_
-if sys.version_info.major == 3:
-    from subprocess import run
-else:
-    from subprocess import call as run
 
 
 NUM_PROCESS = 3
+
+
+class BadPackageFile(Exception):
+    pass
 
 
 class QtInstaller:
@@ -62,18 +61,10 @@ class QtInstaller:
             with open(archive, 'wb') as fd:
                 for chunk in r.iter_content(chunk_size=8196):
                     fd.write(chunk)
-            sys.stdout.write("\033[K")
             print("-Extracting {}...".format(archive))
-            if platform.system() == 'Windows':
-                if path is not None:
-                    run([r'C:\Program Files\7-Zip\7z.exe', 'x', '-aoa', '-y', '-o', path, archive])
-                else:
-                    run([r'C:\Program Files\7-Zip\7z.exe', 'x', '-aoa', '-y', archive])
-            else:
-                if path is not None:
-                    run([r'7zr', 'x', '-aoa', '-y', '-o', path, archive])
-                else:
-                    run([r'7zr', 'x', '-aoa', '-y', archive])
+            if not py7zr.is_7zfile(archive):
+                raise BadPackageFile
+            py7zr.SevenZipFile(archive).extractall(path=path)
             os.unlink(archive)
         return True
 
