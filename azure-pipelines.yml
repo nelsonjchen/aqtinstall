@@ -2,7 +2,7 @@
 variables:
   aqt_version: 0.3.1
   qtversion: 5.12.1
-  pydepends: requests six flake8 wheel twine
+  pydepends: requests six libarchive flake8 wheel twine
 
 jobs:
 - job: Ubuntu_1604_py3

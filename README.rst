@@ -39,9 +39,10 @@ It's working on Linux, OS X and Windows.
 Prerequisite
 ------------
 
-**Dependencies**: python, 7z
+**Dependencies**: python, libarchive
 
-It is required `p7zip` for windows, `7zip` for mac or `p7zip-full` for Ubuntu.
+It requires `libarchive` for Windows and Mac OSX, or `libarchive-dev` for Ubuntu.
+You may need to set `LD_LIBRARY_PATH` to point your libarchive installation path on Windows and Mac OSX.
 
 Install
 -------

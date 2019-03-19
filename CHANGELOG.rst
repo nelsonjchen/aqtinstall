@@ -23,6 +23,7 @@ Changed
 * Change project directory structure.
 * cli command name changed from `aqtinst` to `aqt` and now you can run `aqt install`
 * Introduce Cli class
+* Use libarchive instead of 7zr command
 
 Fixed
 -----

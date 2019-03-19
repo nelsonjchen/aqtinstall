@@ -22,16 +22,13 @@
 
 import logging
 import os
-import platform
 import sys
 import traceback
+
+import libarchive.public
 import requests
 from six import StringIO
 from multiprocessing.dummy import Pool
-if sys.version_info.major == 3:
-    from subprocess import run
-else:
-    from subprocess import call as run
 
 NUM_PROCESS = 3
 
@@ -60,10 +57,11 @@ class QtInstaller:
                     fd.write(chunk)
             sys.stdout.write("\033[K")
             print("-Extracting {}...".format(archive))
-            if platform.system() == 'Windows':
-                run([r'C:\Program Files\7-Zip\7z.exe', 'x', '-aoa', '-y', archive])
-            else:
-                run([r'7zr', 'x', '-aoa', '-y', archive])
+            with libarchive.public.file_reader(archive) as file_read:
+                for entry in file_read:
+                    with open(str(entry), 'wb') as f:
+                        for block in entry.get_blocks():
+                            f.write(block)
             os.unlink(archive)
 
     @staticmethod
